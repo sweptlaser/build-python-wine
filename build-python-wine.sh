@@ -27,6 +27,10 @@ if [ "${PROJECT_PATH}" = "" ] || [ "${DEST_PATH}" = "" ]; then
     exit 1
 fi
 
+# use a convenient cache directory for all remote files
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export CACHEDIR="${XDG_CACHE_HOME}"/build-python-wine;
+
 # get the directory where this script lives
 DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
