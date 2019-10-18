@@ -1,8 +1,6 @@
 #!/bin/sh
 
 BUILDTOOLS_INSTALLER_URL="http://download.microsoft.com/download/5/F/7/5F7ACAEB-8363-451F-9425-68A90F98B238/visualcppbuildtools_full.exe";
-XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-export CACHEDIR="${XDG_CACHE_HOME}"/build-python-wine;
 
 # Python 3.7.3
 if [ "${WINEARCH}" = "win32" ]; then
