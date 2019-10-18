@@ -79,12 +79,14 @@ wait $PID
 export WINE_PYTHON_PATH=$("${WINE}" python -c 'import os; import sys; print(os.path.dirname(sys.executable));' 2>/dev/null | tr --delete '\r\n');
 export PYTHON_PATH=$(echo "${WINEPREFIX}/${WINE_PYTHON_PATH}" | sed -e 's|C:|drive_c|' -e 's|\\|/|g');
 
-## Work around wine missing "chcp" (check codepage)
-echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe
-chmod +x "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe
-if [ "${WINEARCH}" != "win32" ]; then
-    echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.exe
-    chmod +x "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.exe
+## Work around wine missing "chcp" (change codepage)
+if [ ! -f "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe ]; then
+    echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe
+    chmod +x "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe
+    if [ "${WINEARCH}" != "win32" ]; then
+        echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.exe
+        chmod +x "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.exe
+    fi
 fi
 
 ## Setup all the Python packages that we need for common builds
