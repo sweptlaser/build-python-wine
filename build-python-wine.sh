@@ -34,6 +34,11 @@ export CACHEDIR="${XDG_CACHE_HOME}"/build-python-wine;
 # get the directory where this script lives
 DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
+# disable Wine debug messages unless requested otherwise
+if [ -z ${WINEDEBUG+x} ]; then
+    export WINEDEBUG=-all
+fi
+
 ## Setup Wine environment
 . "${DIR}"/setup-wine.sh
 
