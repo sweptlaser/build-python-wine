@@ -32,3 +32,14 @@
  
                      dst = os.path.join(libdir, pydfile)
                      if self.options.verbose:
+--- mf3.py	2019-10-25 08:35:03.697631807 -0600
++++ mf3.py	2019-10-25 08:35:09.353653647 -0600
+@@ -692,7 +692,7 @@
+                     except Exception:
+                         import traceback; traceback.print_exc()
+                         raise RuntimeError("compiling %r" % self) from None
+-                elif hasattr(self, "__file__") and not self.__file__.endswith(".pyd"):
++                elif hasattr(self, "__file__") and not (self.__file__.endswith(".pyd") or self.__file__.endswith(".dll")):
+                     # XXX Remove the following line if the Bug is never triggered!
+                     raise RuntimeError("should read __file__ to get the source???")
+         return self.__code_object__

@@ -105,6 +105,7 @@ DEPENDENCIES="\
 "${WINE}" conda install -y ${DEPENDENCIES}
 
 ## Setup py2exe for building executables
+# Note: these fixes need to get pushed upstream
 "${WINE}" pip install "${PY2EXE_INSTALLER}"
 patch -d "${WINEPREFIX}"/drive_c/ProgramData/Miniconda3/Lib/site-packages/py2exe/ -p0 --binary -i "${DIR}"/py2exe.diff
 
