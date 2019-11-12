@@ -57,20 +57,27 @@ WINETRICKS="${DIR}"/winetricks/src/winetricks
 "${WINETRICKS}" -q dotnet452
 "${WINETRICKS}" win7
 
+version_gt() {
+    test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1";
+}
+
 ## Install MSVC Build Tools
 # launch the installer
 "${WINE}" "${BUILDTOOLS_INSTALLER}" /Quiet &
 PID=$!
-# wait for the installer to get to where it attempts to create a system restore point
-sleep 180 # TODO: wait by watching for svchost.exe instead of three minute constant delay ?
-echo "*****************************************************"
-echo "info proc" | "${WINE}" winedbg
-echo "*****************************************************"
-SVCHOST_PID=$(printf "%d\n" 0x0$(echo "info proc" | "${WINE}" winedbg | grep "'svchost.exe'" | cut -d' ' -f 2))
-echo "*****************************************************"
-echo "SVCHOST_PID: ${SVCHOST_PID}"
-echo "*****************************************************"
-printf "attach ${SVCHOST_PID}\nkill\n" | "${WINE}" winedbg
+WINE_VERSION=$("${WINE}" --version | sed 's/wine-\([0-9\.]*\).*/\1/')
+if version_gt "5.0" "${WINE_VERSION}"; then
+    # wait for the installer to get to where it attempts to create a system restore point
+    sleep 180 # TODO: wait by watching for svchost.exe instead of three minute constant delay ?
+    echo "*****************************************************"
+    echo "info proc" | "${WINE}" winedbg
+    echo "*****************************************************"
+    SVCHOST_PID=$(printf "%d\n" 0x0$(echo "info proc" | "${WINE}" winedbg | grep "'svchost.exe'" | cut -d' ' -f 2))
+    echo "*****************************************************"
+    echo "SVCHOST_PID: ${SVCHOST_PID}"
+    echo "*****************************************************"
+    printf "attach ${SVCHOST_PID}\nkill\n" | "${WINE}" winedbg
+fi
 # wait for the installer to finish
 wait $PID
 
