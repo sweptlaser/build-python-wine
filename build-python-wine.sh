@@ -1,6 +1,9 @@
 #!/bin/sh
 # WARNING: The Wine environment will get cleaned up when this script completes.
 
+# abort this script at the first nonzero return
+set -o errexit
+
 export SETUP_ARGS="bdist_wheel"
 export BUILD_CALLBACK=""
 export INSTALL_CALLBACK=""
