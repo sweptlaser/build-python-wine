@@ -80,12 +80,12 @@ export WINE_PYTHON_PATH=$("${WINE}" python -c 'import os; import sys; print(os.p
 export PYTHON_PATH=$(echo "${WINEPREFIX}/${WINE_PYTHON_PATH}" | sed -e 's|C:|drive_c|' -e 's|\\|/|g');
 
 ## Work around wine missing "chcp" (change codepage)
-if [ ! -f "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe ]; then
-    echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe
-    chmod +x "${WINEPREFIX}"/drive_c/windows/system32/chcp.exe
+if [ ! -f "${WINEPREFIX}"/drive_c/windows/system32/chcp.com ]; then
+    echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/system32/chcp.com
+    chmod +x "${WINEPREFIX}"/drive_c/windows/system32/chcp.com
     if [ "${WINEARCH}" != "win32" ]; then
-        echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.exe
-        chmod +x "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.exe
+        echo "#!/bin/bash" > "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.com
+        chmod +x "${WINEPREFIX}"/drive_c/windows/syswow64/chcp.com
     fi
 fi
 
