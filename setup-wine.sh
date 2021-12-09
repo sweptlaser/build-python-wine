@@ -11,7 +11,14 @@ export WINEDLLOVERRIDES="mscoree=n;mshtml=";
 export WINE=$(which wine);
 # we use Xvfb to work around an issue where the Python installer will not run headlessly
 . "${DIR}"/setup-xvfb.sh "${WINEPREFIX}"
-SCRIPT_HASH=$(md5sum "${DIR}"/setup-wine-2.sh | cut -d' ' -f 1)
+
+SCRIPTS_TO_HASH=$(echo "\
+  ${DIR}/setup-wine-2.sh \
+  ${DIR}/setup-wine-install-python.sh \
+  ${DIR}/setup-wine-install-py2exe.sh\
+  ")
+
+SCRIPT_HASH=$(echo "${SCRIPTS_TO_HASH}" | xargs cat  | md5sum - | cut -d' ' -f 1)
 CALLBACK_HASH=$(md5sum "${INSTALL_CALLBACK}" 2>/dev/null | cut -d' ' -f 1)
 WINECACHE="${HOME}"/.wine-build-py_${SCRIPT_HASH}-${CALLBACK_HASH}-${WINEARCH}
 lock "${WINECACHE}.lock"
