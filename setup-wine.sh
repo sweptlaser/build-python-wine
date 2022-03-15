@@ -14,6 +14,7 @@ export WINE=$(which wine);
 
 SCRIPTS_TO_HASH=$(echo "\
   ${DIR}/setup-wine-2.sh \
+  ${DIR}/setup-wine-install-cppbuildtools.sh \
   ${DIR}/setup-wine-install-python.sh \
   ${DIR}/setup-wine-install-py2exe.sh\
   ")

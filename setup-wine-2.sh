@@ -21,5 +21,6 @@ trap cleanup_wine EXIT;
 WINETRICKS="${DIR}"/winetricks/src/winetricks
 ${WINETRICKS} win7 # create WinePrefix
 
+. "${DIR}"/setup-wine-install-cppbuildtools.sh
 . "${DIR}"/setup-wine-install-python.sh
 . "${DIR}"/setup-wine-install-py2exe.sh
