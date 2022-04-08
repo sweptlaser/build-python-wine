@@ -17,7 +17,7 @@ if [ ! -f "${PYTHON_INSTALLER}" ]; then
 fi
 
 echo "-------------- INSTALL MINICONDA ---------------"
-"${WINE}" "${PYTHON_INSTALLER}" /S /RegisterPython=1 /AddToPath=1
+"${WINE}" "${PYTHON_INSTALLER}" /S /RegisterPython=1 /AddToPath=1 /D=C:\\ProgramData\\Miniconda3
 
 export WINE_PYTHON_PATH=$("${WINE}" python -c 'import os; import sys; print(os.path.dirname(sys.executable));' 2>/dev/null | tr --delete '\r\n');
 export PYTHON_PATH=$(echo "${WINEPREFIX}/${WINE_PYTHON_PATH}" | sed -e 's|C:|drive_c|' -e 's|\\|/|g');
